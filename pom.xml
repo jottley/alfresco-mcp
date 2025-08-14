@@ -9,24 +9,46 @@
         <version>3.5.4</version>
         <relativePath />
     </parent>
+
     <groupId>org.alfresco</groupId>
     <artifactId>mcp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>alfresco-mcp</name>
     <description>Alfresco MCP Server Demo App</description>
-    <url />
+
+    <url>https://github.com/jottley/alfresco-mcp</url>
+
     <licenses>
-        <license />
+      <license>
+        <name>Apache License, Version 2.0</name>
+        <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        <distribution>repo</distribution>
+      </license>
     </licenses>
+
     <developers>
-        <developer />
+        <developer>
+            <id>jottley</id>
+            <name>Jared Ottley</name>
+            <email>jottley@gmail.com</email>
+            <url>https://github.com/jottley</url>
+        </developer>
+        <developer>
+            <id>jottley</id>
+            <name>Jared Ottley</name>
+            <email>jared.ottley@hyland.com</email>
+            <organization>Hyland Software</organization>
+            <url>https://github.com/alfresco</url>
+        </developer>
     </developers>
+
     <scm>
-        <connection />
-        <developerConnection />
-        <tag />
-        <url />
+        <connection>scm:git:https://github.com/jottley/alfresco-mcp.git</connection>
+        <developerConnection>scm:git:git@github.com:jottley/alfresco-mcp.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/jottley/alfresco-mcp</url>
     </scm>
+    
     <properties>
         <java.version>17</java.version>
         <spring-ai.version>1.0.1</spring-ai.version>
@@ -121,6 +143,34 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.37.0</version>
+                <configuration>
+                    <java>
+                        <googleJavaFormat>
+                            <version>1.17.0</version>
+                        </googleJavaFormat>
+                    </java>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
