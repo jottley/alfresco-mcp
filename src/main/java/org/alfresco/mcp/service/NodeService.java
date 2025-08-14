@@ -1,0 +1,93 @@
+package org.alfresco.mcp.service;
+
+import org.alfresco.core.handler.NodesApi;
+import org.alfresco.core.model.Node;
+import org.alfresco.core.model.NodeBodyCreate;
+import org.alfresco.core.model.NodeEntry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+@Service
+public class NodeService {
+
+    private static final Logger log = LoggerFactory.getLogger(NodeService.class);
+
+    private final NodesApi nodesApi;
+
+    public NodeService(NodesApi nodesApi) {
+        this.nodesApi = nodesApi;
+    }
+
+    @Tool(name = "get_node_entry_by_id", description = "Get the node entry for a specific nodeId in Alfresco Content Service")
+    public Node getNodeEntryById(String nodeId) {
+        try {
+            ResponseEntity<NodeEntry> response = nodesApi.getNode(nodeId, null, null, null);
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                log.error("Failed to retrieve node entry for nodeId: {}", nodeId);
+                return new Node().id("Error retrieving node entry");
+            }
+            NodeEntry nodeEntry = response.getBody();
+            if (nodeEntry == null || nodeEntry.getEntry() == null) {
+                log.error("NodeEntry or its entry is null for nodeId: {}", nodeId);
+                return new Node().id("Node not found");
+            }
+            log.info("Node entry for nodeId {}: {}", nodeId, nodeEntry.getEntry());
+            return nodeEntry.getEntry();
+        } catch (Exception e) {
+            log.error("Exception retrieving node entry for nodeId: {}", nodeId, e);
+            return new Node().id("Exception retrieving node entry");
+        }
+    }
+
+    @Tool(name = "get_node_entries_by_ids", description = "Get the node entries for a list of nodeIds in Alfresco Content Service")
+    public java.util.List<Node> getNodeEntriesByIds(java.util.List<String> nodeIds) {
+        java.util.List<Node> nodes = new java.util.ArrayList<>();
+        for (String nodeId : nodeIds) {
+            try {
+                ResponseEntity<NodeEntry> response = nodesApi.getNode(nodeId, null, null, null);
+                NodeEntry nodeEntry = response.getBody();
+                if (response.getStatusCode().is2xxSuccessful() && nodeEntry != null && nodeEntry.getEntry() != null) {
+                    nodes.add(nodeEntry.getEntry());
+                } else {
+                    log.error("Failed to retrieve node entry for nodeId: {}", nodeId);
+                    nodes.add(new Node().id("Error: " + nodeId));
+                }
+            } catch (Exception e) {
+                log.error("Exception retrieving node entry for nodeId: {}", nodeId, e);
+                nodes.add(new Node().id("Exception: " + nodeId));
+            }
+        }
+        return nodes;
+    }
+
+
+    public void createNode(Node node) {
+        try {
+
+            NodeBodyCreate nodeBodyCreate = new NodeBodyCreate();
+            nodeBodyCreate.setName(node.getName());
+            nodeBodyCreate.setNodeType(node.getNodeType());
+            nodeBodyCreate.setAspectNames(node.getAspectNames());       
+
+            ResponseEntity<NodeEntry> response = nodesApi.createNode(
+                    "-root-",
+                    null,
+                    Boolean.TRUE, // autoRename if a node with the same name exists
+                    Boolean.TRUE, // nodeType
+                    Boolean.TRUE, // aspectNames
+                    null, // relativePath
+                    null                    
+            );
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                log.error("Failed to create node: {}", node);
+            } else {
+                log.info("Node created successfully: {}", response.getBody());
+            }
+        } catch (Exception e) {
+            log.error("Exception creating node: {}", node, e);
+        }
+    }
+}

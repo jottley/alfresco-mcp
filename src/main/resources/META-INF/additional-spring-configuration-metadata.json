@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "content.service.security.basicAuth.username",
+    "type": "java.lang.String",
+    "description": "A description for 'content.service.security.basicAuth.username'"
+  },
+  {
+    "name": "content.service.url",
+    "type": "java.lang.String",
+    "description": "A description for 'content.service.url'"
+  },
+  {
+    "name": "content.service.security.basicAuth.password",
+    "type": "java.lang.String",
+    "description": "A description for 'content.service.security.basicAuth.password'"
+  },
+  {
+    "name": "content.service.security.basicAuth.password",
+    "type": "java.lang.String",
+    "description": "A description for 'content.service.security.basicAuth.password'"
+  }
+]}
