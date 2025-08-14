@@ -134,7 +134,7 @@ public class AuditService {
         String where)
     {
         ResponseEntity<AuditEntryPaging> response = auditApi.listAuditEntriesForAuditApp(appId, 0, Boolean.FALSE,
-                Collections.emptyList(), limit, where, List.of("values"), Collections.emptyList());
+                null, limit, where, List.of("values"), null);
         log.info("Requesting {} audit entries for application: {}", limit, appId);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
@@ -185,7 +185,7 @@ public class AuditService {
             int limit) 
     {
         ResponseEntity<AuditEntryPaging> response = auditApi.listAuditEntriesForNode(nodeId, 0, null,
-                limit, null, List.of("values"), Collections.emptyList());
+                limit, null, List.of("values"), null);
         log.info("Requesting audit entries for node: {}", nodeId);
 
         if (!response.getStatusCode().is2xxSuccessful()) {

@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>org.alfresco</groupId>
-    <artifactId>mcp</artifactId>
+    <artifactId>alfresco-mcp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>alfresco-mcp</name>
     <description>Alfresco MCP Server Demo App</description>

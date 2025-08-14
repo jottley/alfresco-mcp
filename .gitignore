@@ -6,6 +6,9 @@ compose.yaml
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+//remove if you need to update the file before committing changes
+src/main/resources/application.properties
+
 ### STS ###
 .apt_generated
 .classpath
@@ -34,3 +37,4 @@ build/
 ### VS Code ###
 .vscode/
 src/main/resources/vs-mcp-config
+
