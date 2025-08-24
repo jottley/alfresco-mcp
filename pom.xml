@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.4</version>
+        <version>3.5.5</version>
         <relativePath />
     </parent>
 
@@ -19,11 +19,11 @@
     <url>https://github.com/jottley/alfresco-mcp</url>
 
     <licenses>
-      <license>
-        <name>Apache License, Version 2.0</name>
-        <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        <distribution>repo</distribution>
-      </license>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
     </licenses>
 
     <developers>
@@ -48,11 +48,11 @@
         <tag>HEAD</tag>
         <url>https://github.com/jottley/alfresco-mcp</url>
     </scm>
-    
+
     <properties>
         <java.version>17</java.version>
         <spring-ai.version>1.0.1</spring-ai.version>
-        <spring-boot.version>3.5.4</spring-boot.version>
+        <spring-boot.version>3.5.5</spring-boot.version>
         <lombok.version>1.18.32</lombok.version>
         <alfresco-sdk.version>7.2.1-SNAPSHOT</alfresco-sdk.version>
         <swagger-annotations.version>1.6.11</swagger-annotations.version>
@@ -165,6 +165,14 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>spotless-apply</id>
+                        <goals>
+                            <goal>apply</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                    <execution>
+                        <id>spotless-check</id>
                         <goals>
                             <goal>check</goal>
                         </goals>
